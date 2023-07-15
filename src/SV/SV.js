@@ -1,5 +1,8 @@
 import React from 'react';
+import {getMergeSortAnimations} from '../SA/SA.js';
 import './SV.css'
+
+const SPEED = 1;
 
 export default class SV extends React.Component {
   constructor(props) {
@@ -17,13 +20,35 @@ export default class SV extends React.Component {
   resetArray() {
     const array = [];
     for (let i = 0; i < 100; ++i) {
-      array.push(random(5, 1000));
+      array.push(random(5, 700));
     }
     this.setState({array});
   }
 
   mergeSort() {
-
+    const animations = getMergeSortAnimations(this.state.array);
+    for (let i = 0; i < animations.length; i++) {
+      const arrayBars = document.getElementsByClassName('array-bar');
+      const isColorChange = i % 3 !== 2;
+      if (isColorChange) {
+        console.log("iscolorchange");
+        const [barOneIdx, barTwoIdx] = animations[i];
+        const barOneStyle = arrayBars[barOneIdx].style;
+        const barTwoStyle = arrayBars[barTwoIdx].style;
+        const color = i % 3 === 0 ? 'red' : 'cyan';
+        setTimeout(() => {
+          barOneStyle.backgroundColor = color;
+          barTwoStyle.backgroundColor = color;
+        }, i * SPEED);
+      } else {
+        setTimeout(() => {
+          console.log("isnotcolorhange");
+          const [barOneIdx, newHeight] = animations[i];
+          const barOneStyle = arrayBars[barOneIdx].style;
+          barOneStyle.height = `${newHeight}px`;
+        }, i * SPEED);
+      }
+    }
   }
 
   quickSort() {
@@ -36,7 +61,7 @@ export default class SV extends React.Component {
 
   bubbleSort() {
 
-    
+
   }
   render() {
     const {array} = this.state;
@@ -55,7 +80,6 @@ export default class SV extends React.Component {
         
     );
   }
-
 }
 
 function random(min, max) {
