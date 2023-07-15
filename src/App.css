@@ -13,6 +13,12 @@
   }
 }
 
+.resizable-container {
+  height: 400px;
+  overflow: auto;
+  resize: both;
+}
+
 .App-header {
   background-color: #282c34;
   min-height: 100vh;
