@@ -3,7 +3,7 @@ import {getMergeSortAnimations} from '../SA/SA.js';
 import {getQuickSortAnimations} from '../SA/SA.js';
 import './SV.css'
 
-const SPEED = 1;
+const SPEED = 15;
 
 export default class SV extends React.Component {
   constructor(props) {
@@ -16,7 +16,7 @@ export default class SV extends React.Component {
 
   componentDidMount() {
     this.resetArray();
-    this.test();
+    //this.test();
   }
 
   resetArray() {
@@ -28,14 +28,12 @@ export default class SV extends React.Component {
   }
 
   mergeSort() {
-    console.log(this.state.array);
     const animations = getMergeSortAnimations(this.state.array);
     console.log(animations);
     for (let i = 0; i < animations.length; i++) {
       const arrayBars = document.getElementsByClassName('array-bar');
       const isColorChange = i % 3 !== 2;
       if (isColorChange) {//ones that are being compared
-        console.log("iscolorchange");
         const [barOneIdx, barTwoIdx] = animations[i];
         const color = i % 3 === 0 ? 'red' : 'cyan';
         //if it's 1, 3, 4, 6, 7, 9, 10 AND it's a multiple of 3
@@ -46,9 +44,9 @@ export default class SV extends React.Component {
           arrayBars[barOneIdx].style.backgroundColor = color;
           arrayBars[barTwoIdx].style.backgroundColor = color;
         }, i * SPEED);
-      } else {
-        setTimeout(() => {//height change
-          console.log("isnotcolorhange");
+      } 
+      else {
+        setTimeout(() => {//bar height change
           const [barOneIdx, newHeight] = animations[i];
           const barOneStyle = arrayBars[barOneIdx].style;
           barOneStyle.height = `${newHeight}px`;
@@ -58,7 +56,36 @@ export default class SV extends React.Component {
   }
 
   quickSort() {
+    const animations = getQuickSortAnimations(this.state.array);
+    console.log(animations);
+    for (let i = 0; i < animations.length; i++) {
+      const arrayBars = document.getElementsByClassName('array-bar');
+      const isColorChange = i % 2 !== 2;
+      const [barOneIdx, barTwoIdx] = animations[i];
+      let color = 'cyan';
+      if (i%2 === 0) {
+        color = 'red';
+      }
+      else {
+        color = 'cyan';
+        setTimeout(() => {//bar height change
+          console.log(arrayBars[barTwoIdx].style.height);
 
+          let newBarOneHeight = arrayBars[barTwoIdx].style.height
+          let newBarTwoHeight =  arrayBars[barOneIdx].style.height
+          arrayBars[barOneIdx].style.height = newBarOneHeight;
+          arrayBars[barTwoIdx].style.height =newBarTwoHeight;
+ 
+          //barOneStyle.height = `${newHeight}px`;
+        }, i * SPEED);
+
+      }
+      setTimeout(() => {
+        arrayBars[barOneIdx].style.backgroundColor = color;
+        arrayBars[barTwoIdx].style.backgroundColor = color;
+      }, i * SPEED);
+
+    }
   }
 
   heapSort() {
@@ -69,6 +96,7 @@ export default class SV extends React.Component {
 
 
   }
+  //selection sort, insertion sort, counting sort?
 
   test() {
     for (let i = 0; i < 10; ++i) {
