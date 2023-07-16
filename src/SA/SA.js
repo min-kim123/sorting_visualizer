@@ -13,13 +13,37 @@ export function getQuickSortAnimations(array) {
   return animations;
 }
 
-export function getQuickSortAnimations(array) {
+export function getHeapSortAnimations(array) {
   const animations=[];
-  quickSortHelper(array, 0, array.length-1, animations);
+  let n = array.length;
+  heapSortHelper(array, n, animations);
   console.log(array);
-  return animations;
+  return array;
 }
 
+//HEAPSORT
+function heapify(arr, n, i, animations) {
+  let largest = i;
+  let left = 2*i+1;
+  let right = 2*i+2;
+  if (left < n && arr[left] > arr[largest]) largest = left;
+  if (right < n && arr[right] > arr[largest]) largest = right;
+  if (largest != i) {
+    swap(arr, i, largest);
+    heapify(arr, n, largest);//heapify
+  }
+}
+
+function heapSortHelper(arr, n, animations) {
+  for (let i = n/2-1; i >= 0; --i) {
+    heapify(arr, n, i, animations);
+  }
+  for (let i = n-1; i >= 0; --i) {
+    swap(arr, 0, i);
+    heapify(arr, i, 0, animations);
+  }
+}
+//END HEAP SORT
 
 
 //QUICKSORT
@@ -89,7 +113,7 @@ function merge(mainArray, startIdx, middleIdx, endIdx, auxiliaryArray, animation
 }
 //END MERGESORT
 
-function swap(arr, i, j) {   
+function swap(arr, i, j) {   //used by quicksort, heapsort
   let temp = arr[i];
   arr[i] = arr[j];
   arr[j] = temp;

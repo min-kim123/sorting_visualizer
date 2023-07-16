@@ -1,6 +1,7 @@
 import React from 'react';
 import {getMergeSortAnimations} from '../SA/SA.js';
 import {getQuickSortAnimations} from '../SA/SA.js';
+import {getHeapSortAnimations} from '../SA/SA.js';
 import './SV.css'
 
 const SPEED = 15;
@@ -16,7 +17,7 @@ export default class SV extends React.Component {
 
   componentDidMount() {
     this.resetArray();
-    //this.test();
+    this.test();
   }
 
   resetArray() {
@@ -105,7 +106,7 @@ export default class SV extends React.Component {
         array.push(random(5, 700));
       }
       const builtInSort = array.slice().sort((a, b) => a-b);
-      const mySort = getQuickSortAnimations(array);
+      const mySort = getHeapSortAnimations(array);
       console.log(checkIfEqual(builtInSort, mySort));
     }
   }
